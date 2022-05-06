@@ -4,7 +4,7 @@ export const useFetch = ( url ) => {
     
     const isMounted = useRef(true)
 
-    const [state, setState] = useState({ data: null, loading: true, error: false, });
+    const [state, setState] = useState({ data: null, loading: true, error: null, });
 
     useEffect( () => {
         return () => {
@@ -12,7 +12,7 @@ export const useFetch = ( url ) => {
         }
     },[])
 
-  useEffect( ( ) => {
+  useEffect( () => {
       
      setState({ data: null, loading: true, error: false, });
 
@@ -30,7 +30,15 @@ export const useFetch = ( url ) => {
 
             }
 
-          });
+          })
+
+          .catch( () => {
+            setState({
+                data: null,
+                loading: false,
+                error: 'No se pudo cargar la info'
+            })
+        })
     
         // const getData = async() =>{
         //     const response = await fetch(url) 
